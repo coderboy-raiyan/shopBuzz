@@ -3,20 +3,14 @@ import mongoose from 'mongoose';
 import AppError from '../../errors/AppError';
 import { TAdmin } from '../admin/admin.interface';
 import Admin from '../admin/admin.model';
-import Role from '../role/role.model';
 import { RoleUtils } from '../role/role.utils';
 import User from './user.model';
 
 const createAdmin = async (payload: TAdmin & { password: string }) => {
     const admin = await User.findOne({ email: payload?.email });
-    const role = await Role.findOne({ name: RoleUtils.Role.admin });
 
     if (admin) {
         throw new AppError(StatusCodes.BAD_REQUEST, 'Admin already exists!');
-    }
-
-    if (!role) {
-        throw new AppError(StatusCodes.NOT_FOUND, 'Role not found!');
     }
 
     const session = await mongoose.startSession();
@@ -25,7 +19,7 @@ const createAdmin = async (payload: TAdmin & { password: string }) => {
         session.startTransaction();
 
         const user = await User.create(
-            [{ email: payload?.email, role: role?._id, password: payload?.password }],
+            [{ email: payload?.email, role: RoleUtils.Role.admin, password: payload?.password }],
             {
                 session,
             }

@@ -1,4 +1,4 @@
-import { Types } from 'mongoose';
+import { RoleUtils } from '../role/role.utils';
 import { UserUtils } from './user.utils';
 
 export type TUserStatus = {
@@ -15,6 +15,6 @@ export type TUser = {
     password: string;
     isVerified: boolean;
     status: keyof typeof UserUtils.UserStatus;
-    role: Types.ObjectId | string;
+    role: keyof typeof RoleUtils.Role;
     isDeleted: boolean;
 };
