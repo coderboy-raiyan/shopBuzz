@@ -1,5 +1,7 @@
+import { RoleUtils } from './role.utils';
+
 export type TRole = {
-    name: string;
+    name: keyof typeof RoleUtils.Role;
 };
 
 export type TRoleType = {
@@ -8,3 +10,5 @@ export type TRoleType = {
     seller: 'seller';
     customer: 'customer';
 };
+
+export type TRoleEnum = (keyof TRoleType)[];

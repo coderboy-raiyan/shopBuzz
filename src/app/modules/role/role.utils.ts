@@ -1,15 +1,15 @@
-import { TRoleType } from './role.interface';
+import { TRoleEnum, TRoleType } from './role.interface';
 
-const TRole: TRoleType = {
+const Role: TRoleType = {
     admin: 'admin',
     superAdmin: 'superAdmin',
     seller: 'seller',
     customer: 'customer',
 };
 
-const TRoleEnum: (keyof TRoleType)[] = ['admin', 'customer', 'seller', 'superAdmin'];
+const RoleEnum: TRoleEnum = ['admin', 'customer', 'seller', 'superAdmin'];
 
 export const RoleUtils = {
-    TRole,
-    TRoleEnum,
+    Role,
+    RoleEnum,
 };

@@ -9,12 +9,12 @@ const roleSchema = new Schema<TRole>(
             required: true,
             unique: true,
             trim: true,
-            enum: RoleUtils.TRoleEnum,
+            enum: RoleUtils.RoleEnum,
         },
     },
     { timestamps: true }
 );
 
-const Role = model('Role', roleSchema);
+const Role = model<TRole>('Role', roleSchema);
 
 export default Role;
