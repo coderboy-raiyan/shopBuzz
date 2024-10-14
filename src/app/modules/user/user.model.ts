@@ -1,5 +1,6 @@
+import { hash } from 'bcryptjs';
 import { model, Schema } from 'mongoose';
-import { RoleUtils } from '../role/role.utils';
+import config from '../../config';
 import { TUser } from './user.interface';
 import { UserUtils } from './user.utils';
 
@@ -14,6 +15,7 @@ const userSchema = new Schema<TUser>(
             type: String,
             required: true,
             min: 6,
+            select: false,
         },
         isDeleted: {
             type: Boolean,
@@ -24,19 +26,24 @@ const userSchema = new Schema<TUser>(
             default: false,
         },
         role: {
-            type: String,
-            enum: RoleUtils.RoleEnum,
-            required: true,
+            type: Schema.Types.ObjectId,
+            ref: 'Role',
         },
         status: {
             type: String,
             enum: UserUtils.UserStatusEnum,
             default: 'pending',
-            required: true,
         },
     },
     { timestamps: true }
 );
+
+userSchema.pre('save', async function (next) {
+    if (this.isModified('password')) {
+        this.password = await hash(this.password, config.bcrypt_salt_round);
+    }
+    next();
+});
 
 const User = model<TUser>('User', userSchema);
 

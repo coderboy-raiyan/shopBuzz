@@ -1,4 +1,4 @@
-import { RoleUtils } from '../role/role.utils';
+import { Types } from 'mongoose';
 import { UserUtils } from './user.utils';
 
 export type TUserStatus = {
@@ -12,10 +12,9 @@ export type TUserStatusEnum = (keyof TUserStatus)[];
 
 export type TUser = {
     email: string;
-    _id: string;
     password: string;
     isVerified: boolean;
     status: keyof typeof UserUtils.UserStatus;
-    role: keyof typeof RoleUtils.Role;
+    role: Types.ObjectId | string;
     isDeleted: boolean;
 };

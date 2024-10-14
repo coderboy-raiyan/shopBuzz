@@ -6,7 +6,10 @@ import Role from './role.model';
 const createRoleInToDB = async (payload: TRole) => {
     const isRoleExists = await Role.findOne({ name: payload?.name });
     if (isRoleExists) {
-        throw new AppError(StatusCodes.INTERNAL_SERVER_ERROR, `${payload?.name} already exists!`);
+        throw new AppError(
+            StatusCodes.INTERNAL_SERVER_ERROR,
+            `This role "${payload?.name}" already exists!`
+        );
     }
 
     const role = await Role.create({ name: payload?.name });

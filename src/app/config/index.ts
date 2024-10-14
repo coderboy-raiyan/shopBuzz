@@ -8,6 +8,7 @@ const config = {
     db_uri: process.env.DB_URI,
     node_env: process.env.NODE_ENV as 'development' | 'production',
     cors_origin_url: process.env.CORS_ORIGIN_URL,
+    bcrypt_salt_round: Number(process.env.BCRYPT_SALT_ROUND || '10'),
 };
 
 export default config;
